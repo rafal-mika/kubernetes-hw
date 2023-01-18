@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  api:
+    container_name: 'api'
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    environment:
+      CONNECTION_STRING: dbname=api_db user=postgres password=pg_password port=5432 host=db
+    ports:
+    - 5000:5000
+    depends_on:
+      - db
+    restart: on-failure
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: pg_password
+      POSTGRES_DB: api_db
+    ports:
+      - 5433:5432
+    volumes:
+      - ./.db-data:/var/lib/postgresql/data
