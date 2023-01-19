@@ -1,18 +1,16 @@
 # Kubernetes - Secrets
 
-The application provides API with Postgre database.
+The application provides API with the Postgre database. The database connection string is passed as an environment variable.
+Th database credentials are stored in the Kubernetes secrets object.
 
-Database connection string is passed as environment variable.
-
-Database credentials are stored in Kubernetes secrets object.
-
-There are available two method do test database connection
+There are two methods available for testing the database connection.
 
 To check database version, use `localhost/db-version`
 
 To check connection status, use `localhost/is-db-connected`
 
-To deploy the application, follow these steps:
+Follow these steps to deploy the application:
+---
 
 1. Set up Ingress Controller (if you don't have).
 
