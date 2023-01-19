@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: my-api-pod
+  template:
+    metadata:
+      labels:
+        app: my-api-pod
+    spec:
+      containers:
+      - name: my-api
+        image: task2-api
+        imagePullPolicy: Never
+        env:
+        - name: POSTGRES_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+                name: db-secrets
+                key: POSTGRES_CONNECTION_STRING
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-api-svc
+spec:
+  selector:
+    app: my-api-pod
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+    name: http
+
