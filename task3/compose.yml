@@ -1,0 +1,28 @@
+version: '3.2'
+services:
+  api-gateway:
+    container_name: 'api-gateway'
+    build:
+      context: ./api-gateway/
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
+    restart: on-failure
+  api1:
+    container_name: 'api1'
+    build:
+      context: ./api1/
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
+    depends_on:
+      - api2
+    restart: on-failure
+  api2:
+    container_name: 'api2'
+    build:
+      context: ./api2/
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
+    restart: on-failure
